@@ -9,8 +9,8 @@ for node in $SLAVES $OTHER_MASTERS; do
   ssh -t $SSH_OPTS root@$node "/etc/init.d/gmond restart"
 done
 
-# gmeta needs rrds to be owned by nobody
-chown -R nobody /var/lib/ganglia/rrds
+# gmeta needs rrds to be owned by ganglia (in CentOs 6.4)
+chown -R ganglia /var/lib/ganglia/rrds
 # cluster-wide aggregates only show up with this. TODO: Fix this cleanly ?
 ln -s /usr/share/ganglia/conf/default.json /var/lib/ganglia/conf/
 
