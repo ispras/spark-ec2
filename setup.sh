@@ -9,16 +9,20 @@ source /root/.bash_profile
 # Load the cluster variables set by the deploy script
 source ec2-variables.sh
 
+## Commented out because dnsmasq in most openstack installations can't detect assigned addresses
 # Set hostname based on EC2 private DNS name, so that it is set correctly
 # even if the instance is restarted with a different private DNS name
 # NOTE: The address "instance-data.ec2.intarnal" can be used only on Amazon,
 #       but 169.254.169.254 is understood by Amazon, Openstack and Eucalyptus at
 #       the same time
-PRIVATE_DNS=`wget -q -O - http://169.254.169.254/latest/meta-data/local-hostname`
-PUBLIC_DNS=`wget -q -O - http://169.254.169.254/latest/meta-data/hostname`
-hostname $PRIVATE_DNS
-echo $PRIVATE_DNS > /etc/hostname
-export HOSTNAME=$PRIVATE_DNS  # Fix the bash built-in hostname variable too
+#PRIVATE_DNS=`wget -q -O - http://169.254.169.254/latest/meta-data/local-hostname`
+#PUBLIC_DNS=`wget -q -O - http://169.254.169.254/latest/meta-data/hostname`
+#hostname $PRIVATE_DNS
+#echo $PRIVATE_DNS > /etc/hostname
+#export HOSTNAME=$PRIVATE_DNS  # Fix the bash built-in hostname variable too
+
+PRIVATE_DNS=`hostname`
+export HOSTNAME=`hostname`
 
 echo "Setting up Spark on `hostname`..."
 
