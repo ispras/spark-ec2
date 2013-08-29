@@ -5,12 +5,16 @@ cd /root/spark-openstack
 
 source ec2-variables.sh
 
+## Commented out because dnsmasq in most openstack installations can't detect assigned addresses
 # Set hostname based on EC2 private DNS name, so that it is set correctly
 # even if the instance is restarted with a different private DNS name
-PRIVATE_DNS=`wget -q -O - http://169.254.169.254/latest/meta-data/local-hostname`
-hostname $PRIVATE_DNS
-echo $PRIVATE_DNS > /etc/hostname
-HOSTNAME=$PRIVATE_DNS  # Fix the bash built-in hostname variable too
+#PRIVATE_DNS=`wget -q -O - http://169.254.169.254/latest/meta-data/local-hostname`
+#hostname $PRIVATE_DNS
+#echo $PRIVATE_DNS > /etc/hostname
+#HOSTNAME=$PRIVATE_DNS  # Fix the bash built-in hostname variable too
+
+PRIVATE_DNS=`hostname`
+export HOSTNAME=`hostname`
 
 echo "Setting up slave on `hostname`..."
 
